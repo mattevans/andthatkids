@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>And That, Kids...</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+        
+        .center-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+        
+        .main-image {
+            max-width: 600px;
+            animation: pulse 1.2s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .flying-image {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 5;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="center-container">
+        <img src="andthatkids.png" alt="And that kids..." class="main-image">
+    </div>
+    
+    <script>
+        // Create flying circular images
+        const numImages = 23;
+        
+        function createFlyingImage() {
+            const img = document.createElement('img');
+            img.src = 'bbusa.jpeg';
+            img.className = 'flying-image';
+            
+            // Random starting position
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight;
+            
+            // Random speed and direction
+            const speedX = (Math.random() - 0.5) * 4;
+            const speedY = (Math.random() - 0.5) * 4;
+            
+            img.style.left = startX + 'px';
+            img.style.top = startY + 'px';
+            
+            document.body.appendChild(img);
+            
+            // Animation for the flying image
+            let x = startX;
+            let y = startY;
+            
+            function moveImage() {
+                x += speedX;
+                y += speedY;
+                
+                // Wrap around edges instead of bouncing
+                if (x < -80) {
+                    x = window.innerWidth;
+                } else if (x > window.innerWidth) {
+                    x = -80;
+                }
+                
+                if (y < -80) {
+                    y = window.innerHeight;
+                } else if (y > window.innerHeight) {
+                    y = -80;
+                }
+                
+                img.style.left = x + 'px';
+                img.style.top = y + 'px';
+                
+                requestAnimationFrame(moveImage);
+            }
+            
+            moveImage();
+        }
+        
+        // Create multiple flying images
+        for (let i = 0; i < numImages; i++) {
+            createFlyingImage();
+        }
+    </script>
+</body>
+</html>
